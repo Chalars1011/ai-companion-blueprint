@@ -7,10 +7,10 @@ lessons.md biography.md 等）。中文分词用 jieba，排序用 BM25 + 时间
 
 用法:
     python mem_search.py "关键词1 关键词2" [--top 8] [--since 2026-01-01]
-    python mem_search.py "交接单" --top 5
+    python mem_search.py "某件事" --top 5
     python mem_search.py "某个项目名" --file journal   # 只看某类文件
 
-配置: 修改 AURELIA 为你自己的记忆目录。
+配置: 修改 MEM_DIR 为你自己的记忆目录。
 """
 import os
 import re
@@ -22,12 +22,12 @@ import jieba
 from rank_bm25 import BM25Okapi
 
 # ⚠️ 改成你自己的记忆目录
-AURELIA = r"[记忆目录]"
+MEM_DIR = r"[记忆目录]"
 SKIP_DIRS = {".events", ".file_history", ".git", "art", "docs", "tools", "node_modules"}
 WATCH_EXTS = {".md", ".txt"}
 
 
-def collect_files(root=AURELIA, file_filter=None):
+def collect_files(root=MEM_DIR, file_filter=None):
     """收集档案 md 文件，返回 [(path, rel)]。file_filter 匹配路径子串。"""
     files = []
     for dirpath, dirnames, filenames in os.walk(root):
